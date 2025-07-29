@@ -1,24 +1,31 @@
 version: 0.2
 
+env:
+  variables:
+    AWS_REGION: ap-south-1
+    AWS_ACCOUNT_ID: 156916773321
+    ECR_REPO: jayamaran/sample-for-ecs
+    ECR_REGISTRY: 156916773321.dkr.ecr.ap-south-1.amazonaws.com
+    IMAGE_TAG: latest
+    BASE_IMAGE: 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs:base
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws --version
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 156916773321.dkr.ecr.ap-south-1.amazonaws.com
-      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
-      - echo IMAGE_TAG=$IMAGE_TAG
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
 
   build:
     commands:
-      - echo Building Docker image...
-      - docker build -t jayamaran/sample-for-ecs:$IMAGE_TAG .
-      - docker tag jayamaran/sample-for-ecs:$IMAGE_TAG 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs:$IMAGE_TAG
+      - echo Building the Docker image...
+      - docker build -f Dockerfile.app --build-arg BASE_IMAGE=$BASE_IMAGE -t $ECR_REPO:$IMAGE_TAG .
 
   post_build:
     commands:
-      - echo Pushing Docker image to Amazon ECR...
-      - docker push 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs:$IMAGE_TAG
+      - echo Pushing the Docker image to ECR...
+      - docker push $ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
+      - echo Build and push complete.
 
+# Optional: remove this if CodePipeline or S3 doesn't require artifacts
 artifacts:
-  files: '**/*'
+  files:
+    - '**/*'

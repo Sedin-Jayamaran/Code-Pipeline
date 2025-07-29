@@ -1,4 +1,5 @@
-FROM ruby-3.3.8v1
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 WORKDIR /app
 COPY Gemfile Gemfile.lock ./
 RUN bundle config set --local without 'development test' && \
