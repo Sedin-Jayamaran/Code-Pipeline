@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 156916773321.dkr.ecr.ap-south-1.amazonaws.com)
+      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
+      - echo IMAGE_TAG=$IMAGE_TAG
+
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t jayamaran/sample-for-ecs:$IMAGE_TAG .
+      - docker tag jayamaran/sample-for-ecs:$IMAGE_TAG 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs:$IMAGE_TAG
+
+  post_build:
+    commands:
+      - echo Pushing Docker image to Amazon ECR...
+      - docker push 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs:$IMAGE_TAG
+
+artifacts:
+  files: '**/*'
