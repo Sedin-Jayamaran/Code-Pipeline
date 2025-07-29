@@ -4,15 +4,14 @@ env:
   variables:
     AWS_REGION: ap-south-1
     AWS_ACCOUNT_ID: 156916773321
-    ECR_REPO: jayamaran/sample-for-ecs
-    ECR_REGISTRY: 156916773321.dkr.ecr.ap-south-1.amazonaws.com
+    ECR_REPO: 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs
     IMAGE_TAG: latest
     BASE_IMAGE: 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs:base
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
 
   build:
     commands:
@@ -22,7 +21,7 @@ phases:
   post_build:
     commands:
       - echo Pushing the Docker image to ECR...
-      - docker push $ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
+      - docker push $ECR_REPO:$IMAGE_TAG
       - echo Build and push complete.
 
 # Optional: remove this if CodePipeline or S3 doesn't require artifacts
