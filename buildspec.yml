@@ -25,7 +25,7 @@ phases:
       - docker push $ECR_REPO:$IMAGE_TAG
       - echo Build and push complete.
       - echo Creating imagedefinitions.json...
-      - printf '[{"name":"exp-code-pipeline","imageUri":"%s"}]' "$ECR_REPO:$IMAGE_TAG" > imagedefinitions.json
+      - printf '[{"name":"buggy-web","imageUri":"%s"}]' "$ECR_REPO:$IMAGE_TAG" > imagedefinitions.json
 
 artifacts:
   files:
