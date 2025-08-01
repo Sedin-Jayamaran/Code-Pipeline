@@ -3,11 +3,12 @@ version: 0.2
 env:
   variables:
     AWS_REGION: ap-south-1
-    AWS_ACCOUNT_ID: 156916773321
-    ECR_REPO: 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs
     IMAGE_TAG: latest
     BASE_IMAGE: 156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs:base
-
+  parameter-store:
+    ECR_REPO = "/jayamaran/my_ecr_repo"
+    AWS_ACCOUNT_ID = "/jayamaran/aws_ID"  
+    
 phases:
   pre_build:
     commands:
