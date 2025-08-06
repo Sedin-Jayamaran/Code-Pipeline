@@ -4,11 +4,11 @@ env:
   variables:
     AWS_REGION: "ap-south-1"
     ECR_ACCOUNT_ID: "156916773321"
-    ECR_URI: "156916773321.dkr.ecr.ap-south-1.amazonaws.com/pooja/rails_app"
-    CONTAINER_NAME: "mycontainer-cicd"
-    CLUSTER_NAME: "pooja-ecs-cluster"             
-    SERVICE_NAME: "ror-cicd-service"         
-    TASK_FAMILY: "pooja-buggy-td"  
+    ECR_URI: "156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs"
+    CONTAINER_NAME: "buggy-web"
+    CLUSTER_NAME: "Jai-Manual-Cluster-NEW"             
+    SERVICE_NAME: "jai-ecs-web-buggy-service-7ec6elts"         
+    TASK_FAMILY: "jai-ecs-web-buggy"  
 phases:
   pre_build:
     commands:
