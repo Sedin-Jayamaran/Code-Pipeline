@@ -7,7 +7,7 @@ env:
     ECR_URI: "156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs"
     CONTAINER_NAME: "buggy-web"
     CLUSTER_NAME: "Jai-Manual-Cluster-NEW"             
-    SERVICE_NAME: "jai-ecs-web-buggy-service-NEW-10"         
+    SERVICE_NAME: "jai-ecs-web-buggy-service-8unmzy0j "         
     TASK_FAMILY: "jai-ecs-web-buggy"  
 phases:
   pre_build:
