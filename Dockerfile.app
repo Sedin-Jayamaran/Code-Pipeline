@@ -9,4 +9,4 @@ RUN RAILS_ENV=production bundle exec rails assets:precompile
  
 EXPOSE 3000
  
-CMD [" rails"," server","-e" , "production" , "-b", "0.0.0.0"]
+CMD ["rails"," server","-e" , "production" , "-b", "0.0.0.0"]
