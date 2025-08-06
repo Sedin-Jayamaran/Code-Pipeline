@@ -5,8 +5,9 @@ RUN bundle config set --local without 'development test' && \
     bundle install --jobs 4 --retry 3
 COPY . .
 
-RUN RAILS_ENV=production bundle exec rails assets:precompile
+RUN bundle exec rake assets:precompile
+
  
 EXPOSE 3000
  
-CMD ["rails"," server","-e" , "production" , "-b", "0.0.0.0"]
+CMD ["rails", "server", "-e", "production", "-b", "0.0.0.0"]
