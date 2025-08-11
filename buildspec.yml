@@ -4,8 +4,8 @@ env:
   variables:
     AWS_REGION: "ap-south-1"
     ECR_ACCOUNT_ID: "156916773321"
-    CLUSTER_NAME: "Jai-Manual-Cluster-NEW"             
-    SERVICE_NAME: "jai-ecs-web-buggy-service-ykh8a981"         
+    CLUSTER_NAME: "Jai-Manual-Cluster"             
+    SERVICE_NAME: "jai-ecs-web-buggy-service-d861uvrj"         
     TASK_FAMILY: "jai-ecs-web-buggy"  
 phases:
   pre_build:
