@@ -1,0 +1,42 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: "ap-south-1"
+    ECR_ACCOUNT_ID: "156916773321"
+    CLUSTER_NAME: "JAI-TERRA-CLUSTER"
+    SERVICE_NAME: "jai-ecs-service"
+    TASK_FAMILY: "JAI-TERRA-TD-web"
+    ECR_REPO_NAME: "jayamaran/sample-for-ecs"
+    CONTAINER_NAME: "buggy-web-terra"
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - export ECR_URI="$ECR_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME"
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URI
+      - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-10)
+      - export APP="${ECR_URI}:${COMMIT_ID}"
+
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -f Dockerfile.app -t $APP .
+      - docker push $APP
+
+  post_build:
+    commands:
+      - echo Writing imagedefinitions.json for ECS deployment...
+      - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$APP" > imagedefinitions.json
+      
+      # Optional: only run if task definition exists
+      - |
+        if aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region $AWS_REGION >/dev/null 2>&1; then
+          echo "Task definition $TASK_FAMILY found."
+        else
+          echo "No existing task definition for $TASK_FAMILY, first run will rely on Terraform."
+        fi
+
+      - echo "Applying Terraform to update ECS task definition..."
+      - terraform apply --auto-approve -var="image=$APP"
