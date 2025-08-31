@@ -13,8 +13,9 @@ phases:
       - yum -y install terraform
       - echo "Installing Docker..."
       - yum install -y docker
-      - service docker start
-      - docker info
+      - echo "Starting Docker daemon..."
+      - nohup dockerd > docker.log 2>&1 &
+      - timeout 15 sh -c "until docker info >/dev/null 2>&1; do echo waiting for docker; sleep 1; done"
 
   pre_build:
     commands:
@@ -22,26 +23,27 @@ phases:
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $ECR_URI
       - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-10)
       - BUGGY_APP="${ECR_URI}:${COMMIT_ID}"
+      - echo "$BUGGY_APP" > image_tag.txt
+      - echo "Docker image tag: $BUGGY_APP"
 
   build:
     commands:
       - echo "Building Docker image..."
-      - docker build --no-cache -f Buggy-App/Dockerfile.app -t $BUGGY_APP Buggy-App/
+      - BUGGY_APP=$(cat image_tag.txt)
+      - docker build -f Buggy-App/Dockerfile.app -t $BUGGY_APP Buggy-App/
+      - echo "Docker image built successfully."
 
   post_build:
     commands:
-      - echo "Pushing Docker image..."
+      - echo "Pushing Docker image to ECR..."
+      - BUGGY_APP=$(cat image_tag.txt)
       - docker push $BUGGY_APP
       - echo "Docker image pushed successfully."
       - echo "Creating imagedefinitions.json for ECS..."
       - printf '[{"name":"buggy-web","imageUri":"%s"}]' "$BUGGY_APP" > imagedefinitions.json
-      - echo "Changing directory to Terraform folder..."
-      - cd $CODEBUILD_SRC_DIR/Buggy-App/Terraform
-      - echo "Listing Terraform files to confirm..."
-      - ls -la
-      - echo "Initializing Terraform..."
+      - echo "Running Terraform in Buggy-App/Terraform..."
+      - cd Buggy-App/Terraform
       - terraform init
-      - echo "Applying Terraform with new image..."
       - terraform apply --auto-approve -var="image=$BUGGY_APP" -var-file=terraform.tfvars
 
 artifacts:
