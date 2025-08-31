@@ -40,4 +40,5 @@ phases:
       - echo "Initializing Terraform..."
       - terraform init
       - echo "Applying Terraform with new Docker image..."
-      - terraform apply --auto-approve -var="image=$BUGGY_APP" 
+      - terraform apply --auto-approve -var="image=$BUGGY_APP" -var-file=terraform.tfvars
+
