@@ -7,36 +7,21 @@ env:
 phases:
   install:
     commands:
-      - echo "Installing Terraform..."
+      - echo Installing Terraform...
       - yum install -y yum-utils
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum -y install terraform
-      - echo "Installing Docker..."
-      - yum install -y docker
-      - echo "Starting Docker daemon..."
-      - nohup dockerd > docker.log 2>&1 &
-      - timeout 15 sh -c "until docker info >/dev/null 2>&1; do echo waiting for docker; sleep 1; done"
-
-  pre_build:
-    commands:
-      - echo "Logging into ECR..."
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $ECR_URI
       - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-10)
       - BUGGY_APP="${ECR_URI}:${COMMIT_ID}"
-      - echo "$BUGGY_APP" > image_tag.txt
-      - echo "Docker image tag: $BUGGY_APP"
 
   build:
     commands:
-      - echo "Building Docker image..."
-      - BUGGY_APP=$(cat image_tag.txt)
       - docker build -f Buggy-App/Dockerfile.app -t $BUGGY_APP Buggy-App/
-      - echo "Docker image built successfully."
-
+      
   post_build:
     commands:
       - echo "Pushing Docker image to ECR..."
-      - BUGGY_APP=$(cat image_tag.txt)
       - docker push $BUGGY_APP
       - echo "Docker image pushed successfully."
       - echo "Creating imagedefinitions.json for ECS..."
