@@ -21,7 +21,7 @@ data "aws_lb_target_group" "app_tg" {
 }
 
 resource "aws_ecs_service" "jai_service" {
-  name            = "jai-ecs-service"
+  name            = var.service_name
   cluster         = data.aws_ecs_cluster.cluster.id
   task_definition = var.td_arn
   desired_count   = 1
@@ -35,6 +35,10 @@ resource "aws_ecs_service" "jai_service" {
     subnets          = data.aws_subnets.public.ids
     security_groups  = [data.aws_security_group.ecs_sg.id]
     assign_public_ip = false
+  }
+  
+  lifecycle {
+    create_before_destroy = true
   }
 
   load_balancer {
