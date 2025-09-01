@@ -4,8 +4,8 @@ module "taskdefinition" {
 
 }
 
+
 module "service" {
     source = "./service"
     td_arn = module.taskdefinition.task_definition_arn
-    
 }
