@@ -21,7 +21,7 @@ data "aws_lb_target_group" "app_tg" {
 }
 
 resource "aws_ecs_service" "jai_service" {
-  name            = var.service_name
+  name            = "jai_service_ecs"
   cluster         = data.aws_ecs_cluster.cluster.id
   task_definition = var.td_arn
   desired_count   = 1
