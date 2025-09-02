@@ -31,36 +31,36 @@ resource "aws_ecs_task_definition" "JAI-TERRA-TD-web" {
         }
       ]
 
-      environment = [
-        {
-          name  = "MYSQL_DATABASE"
-          value = "database-1-jai"
-        },
-        {
-          name  = "MYSQL_PASSWORD"
-          value = "Jayamaran1011"
-        },
-        {
-          name  = "MYSQL_PORT"
-          value = "3306"
-        },
-        {
-          name  = "RAILS_ENV"
-          value = "production"
-        },
-        {
-          name  = "MYSQL_USER"
-          value = "jai"
-        },
-        {
-          name  = "MYSQL_HOST"
-          value = "database-1-jai.clea0kqwgsnt.ap-south-1.rds.amazonaws.com"
-        },
-        {
-          name  = "SECRET_KEY_BASE"
-          value = "327c5f2bda2e0518b89a125809a01af808c7e006e4c500d7c3ca09f804646de79bdf67be394c195f85f311ce24efc34b063ed4ddf5ab90f99151a4e6036b639b"
-        }
-      ]
+      secrets = [
+                  {
+                     name      = "MYSQL_DATABASE"
+                     valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_DATABASE"
+                  },
+                  {
+                     name      = "MYSQL_PASSWORD"
+                     valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_PASSWORD"
+                  },
+                  {
+                    name = "MYSQL_PORT"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_PORT"
+                  },
+                  {
+                    name = "RAILS_ENV"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:RAILS_ENV"
+                  },
+                  {
+                    name = "MYSQL_USER"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_USER"
+                  },
+                  {
+                    name = "MYSQL_HOST"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_HOST"
+                  },
+                  {
+                    name = "SECRET_KEY_BASE"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:SECRET_KEY_BASE"
+                  }
+                ]
 
       logConfiguration = {
         logDriver = "awslogs"
