@@ -34,31 +34,31 @@ resource "aws_ecs_task_definition" "JAI-TERRA-TD-web" {
       secrets = [
                   {
                      name      = "MYSQL_DATABASE"
-                     valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_DATABASE"
+                     valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_DATABASE::"
                   },
                   {
                      name      = "MYSQL_PASSWORD"
-                     valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_PASSWORD"
+                     valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_PASSWORD::"
                   },
                   {
                     name = "MYSQL_PORT"
-                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_PORT"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_PORT::"
                   },
                   {
                     name = "RAILS_ENV"
-                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:RAILS_ENV"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:RAILS_ENV::"
                   },
                   {
                     name = "MYSQL_USER"
-                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_USER"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_USER::"
                   },
                   {
                     name = "MYSQL_HOST"
-                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_HOST"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:MYSQL_HOST::"
                   },
                   {
                     name = "SECRET_KEY_BASE"
-                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:SECRET_KEY_BASE"
+                    valueFrom = "arn:aws:secretsmanager:ap-south-1:156916773321:secret:Jai-Terraform-Secret-oMv1pE:SECRET_KEY_BASE::"
                   }
                 ]
 
