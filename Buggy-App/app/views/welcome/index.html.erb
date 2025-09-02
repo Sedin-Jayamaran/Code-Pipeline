@@ -3,16 +3,190 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Simple HTML Text</title>
+  <title>Gotham Nights — Batman & DC Heroes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#07070b;
+      --panel:#0f1724;
+      --accent:#ffd300; /* bat-yellow */
+      --muted:#9aa6b2;
+      --glass: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Roboto,system-ui,-apple-system,Segoe UI,Helvetica,Arial}
+    body{background: radial-gradient(ellipse at 20% 10%, rgba(255,215,0,0.02), transparent 10%),
+         linear-gradient(180deg,#020205 0%, #0b0f15 70%); color:#e6eef6;}
+
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:24px 40px}
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo-wrap{background:linear-gradient(180deg,#111 0%, #000 100%);padding:8px;border-radius:12px;display:flex;align-items:center}
+    .logo{width:56px;height:56px;display:block}
+    h1{font-family:Orbitron,monospace;margin:0;font-size:22px;letter-spacing:1px}
+    p.tag{margin:0;color:var(--muted);font-size:13px}
+
+    nav{display:flex;gap:14px;align-items:center}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);font-size:14px;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,#111 0%, #16191f 100%);border:1px solid rgba(255,215,0,0.14);color:var(--accent)}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;padding:36px 40px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .hero-intro h2{font-family:Orbitron;margin:0 0 8px 0;font-size:34px}
+    .hero-intro p{color:var(--muted);margin:0 0 18px 0}
+    .cta-row{display:flex;gap:12px}
+
+    /* bat illustration box */
+    .bat-box{position:relative;border-radius:12px;overflow:hidden;height:320px;background:linear-gradient(180deg,#05060a,#0b0f15);display:flex;align-items:center;justify-content:center}
+    .bat-bg{position:absolute;inset:0;filter:blur(22px) contrast(1.1) saturate(1.2);opacity:0.22}
+    .bat-figure{position:relative;z-index:5;max-width:90%;height:auto;transform:translateY(6px)}
+    .bat-shadow{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:70%;height:6px;background:linear-gradient(90deg,rgba(0,0,0,0.6),transparent);filter:blur(6px);opacity:0.8}
+
+    /* roster */
+    .roster{padding:24px 40px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+    .card{background:var(--panel);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;gap:12px;transition:transform .22s ease, box-shadow .22s ease}
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+    .avatar{width:92px;height:92px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;background:var(--glass)}
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .hero-name{font-weight:700;margin:0}
+    .hero-role{font-size:13px;color:var(--muted);margin:0}
+
+    /* footer */
+    footer{padding:28px 40px;display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
+    .dc-logo{height:28px}
+
+    /* responsive */
+    @media (max-width:900px){ .hero{grid-template-columns:1fr; } header{padding:20px} .hero-card{padding:18px} }
+
+    /* subtle bat symbol animation */
+    .bat-symbol{position:absolute;top:12px;right:12px;width:84px;opacity:0.07;filter:drop-shadow(0 6px 20px rgba(0,0,0,0.6));transform-origin:center;animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(3deg)}100%{transform:translateY(0) rotate(0)}}
+
+  </style>
 </head>
 <body>
-  <h1>Hello — Simple HTML Text</h1>
-  <p>This is a minimal HTML page containing simple text. Paste this into a file named <code>index.html</code> and open it in your browser.</p>
+  <header>
+    <div class="brand">
+      <div class="logo-wrap">
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/76/Batman_Symbol.svg" alt="Batman logo">
+      </div>
+      <div>
+        <h1>Gotham Nights</h1>
+        <p class="tag">A tribute to Batman and the DC Universe</p>
+      </div>
+    </div>
+    <nav>
+      <button class="btn">Gallery</button>
+      <button class="btn">Comics</button>
+      <button class="btn primary">Enter The Batcave</button>
+    </nav>
+  </header>
 
-  <p><strong>Notes:</strong></p>
-  <ul>
-    <li>Use this as a starting point for static pages.</li>
-    <li>To serve it locally: <code>python -m http.server 8000</code> (in that directory) and browse <code>http://localhost:8000</code>.</li>
-  </ul>
+  <main>
+    <section class="hero">
+      <div class="hero-card hero-intro">
+        <h2>I am vengeance. I am the night. I am Batman.</h2>
+        <p>Explore an atmospheric mini-tribute to Gotham's guardian and his allies — sleek cards, cinematic accents, and a dash of DC lore. Click a hero to reveal more.</p>
+        <div class="cta-row">
+          <button class="btn primary" onclick="document.getElementById('roster').scrollIntoView({behavior:'smooth'})">Meet the League</button>
+          <button class="btn" onclick="document.body.classList.toggle('noisy')">Toggle Noir</button>
+        </div>
+
+        <div style="margin-top:20px;padding:14px;background:linear-gradient(90deg, rgba(255,215,0,0.04), transparent);border-radius:10px;border:1px dashed rgba(255,215,0,0.06);">
+          <small style="color:var(--muted)">Tip: Hover a card to see the cinematic lift. Click any hero for a quick bio.</small>
+        </div>
+      </div>
+
+      <div class="hero-card bat-box">
+        <img class="bat-bg" src="https://images.unsplash.com/photo-1543610891-33f1df3d6a5d?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=6f3e9023a7c5b87d3a5a9a3f2a3c4d1f" alt="gotham city night"/>
+        <img class="bat-figure" src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Batman-Logo.svg" alt="batman"/>
+        <div class="bat-shadow"></div>
+        <img class="bat-symbol" src="https://upload.wikimedia.org/wikipedia/commons/7/76/Batman_Symbol.svg" alt="bat symbol">
+      </div>
+    </section>
+
+    <section id="roster" class="roster">
+      <h3 style="margin:0 0 14px 0;font-family:Orbitron">The DC Roster</h3>
+      <div class="grid">
+
+        <!-- Batman -->
+        <article class="card" onclick="openCard('Batman','Bruce Wayne — The Dark Knight of Gotham. Detective, tactician, and protector of the innocent. Known for gadgets, grit, and the Bat-family.')">
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/en/1/17/Batman-BenAffleck.jpg" alt="Batman"></div>
+          <h4 class="hero-name">Batman</h4>
+          <p class="hero-role">The Dark Knight</p>
+        </article>
+
+        <!-- Superman -->
+        <article class="card" onclick="openCard('Superman','Clark Kent — The Last Son of Krypton. Symbol of hope, incredible strength and compassion. A moral compass for the League.')">
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/en/3/35/Supermanflying.png" alt="Superman"></div>
+          <h4 class="hero-name">Superman</h4>
+          <p class="hero-role">Man of Steel</p>
+        </article>
+
+        <!-- Wonder Woman -->
+        <article class="card" onclick="openCard('Wonder Woman','Diana Prince — Amazonian princess, diplomat and warrior. Wields the Lasso of Truth and unmatched valor.')">
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/en/e/ed/Wonder_Woman_%282017_film%29.png" alt="Wonder Woman"></div>
+          <h4 class="hero-name">Wonder Woman</h4>
+          <p class="hero-role">Amazonian Princess</p>
+        </article>
+
+        <!-- The Flash -->
+        <article class="card" onclick="openCard('The Flash','Barry Allen — The Fastest Man Alive. Super-speed, quick wit, and the ability to bend time in dire moments.')">
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/en/9/9f/Flash_Rebirth.png" alt="Flash"></div>
+          <h4 class="hero-name">The Flash</h4>
+          <p class="hero-role">Scarlet Speedster</p>
+        </article>
+
+        <!-- Aquaman -->
+        <article class="card" onclick="openCard('Aquaman','Arthur Curry — King of Atlantis. Amphibious strength, trident mastery, and a deep connection to the seas.')">
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/en/9/93/Aquaman_Rebirth.png" alt="Aquaman"></div>
+          <h4 class="hero-name">Aquaman</h4>
+          <p class="hero-role">King of the Seven Seas</p>
+        </article>
+
+        <!-- Cyborg -->
+        <article class="card" onclick="openCard('Cyborg','Victor Stone — Human and machine merged. Technopathy, strategic AI interface, and battlefield adaptability.')">
+          <div class="avatar"><img src="https://upload.wikimedia.org/wikipedia/en/d/d2/Cyborg_DC_Rebirth.png" alt="Cyborg"></div>
+          <h4 class="hero-name">Cyborg</h4>
+          <p class="hero-role">Tech Titan</p>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© Gotham Nights — Fan tribute. Not affiliated with DC Comics.</div>
+    <div><img class="dc-logo" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/DC_Comics_logo.svg" alt="DC logo"></div>
+  </footer>
+
+  <script>
+    function openCard(name, text){
+      // simple modal using window.alert for small page — can be upgraded
+      alert(name + "\n\n" + text);
+    }
+
+    // playful keyboard easter egg: press B for Bat-spark
+    document.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase() === 'b'){
+        flashBat();
+      }
+    })
+
+    function flashBat(){
+      const el = document.createElement('div');
+      el.style.position='fixed'; el.style.inset=0; el.style.zIndex=9999; el.style.display='flex'; el.style.alignItems='center'; el.style.justifyContent='center'; el.style.pointerEvents='none';
+      el.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Batman_Symbol.svg" style="width:220px;filter:drop-shadow(0 6px 20px rgba(0,0,0,0.6));opacity:0.95;transform:scale(0);animation:pop .55s forwards">';
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),700);
+    }
+
+    // pop animation
+    const style = document.createElement('style');
+    style.innerHTML='@keyframes pop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}';
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
