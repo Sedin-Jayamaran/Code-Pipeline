@@ -7,7 +7,7 @@ env:
 phases:
   install:
     commands:
-       - ./scripts/install.sh
+       - Buggy-App/scripts/install.sh
 
   build:
     commands:
