@@ -9,7 +9,7 @@ phases:
        - Buggy-App/scripts/install.sh
   build:
     commands:
-      # source /tmp/envvars
+      - source /tmp/envvars
       - docker build -f Buggy-App/Dockerfile.app -t $BUGGY_APP Buggy-App/      
   post_build:
     commands:
