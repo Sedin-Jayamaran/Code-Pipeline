@@ -1,8 +1,8 @@
 version: 0.2
 
 env:
-  variables:
-    ECR_URI: "156916773321.dkr.ecr.ap-south-1.amazonaws.com/jayamaran/sample-for-ecs"
+  secrets-manager:
+    ECR_URI: "Jai-Terraform-Secret:ECR_URI"
 
 phases:
   install:
