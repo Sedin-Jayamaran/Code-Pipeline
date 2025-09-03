@@ -14,7 +14,8 @@ echo "Logging into Amazon ECR..."
 aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $ECR_URI
 
 echo "Setting commit ID and BUGGY_APP..."
-export COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-10)
+COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-10)
 export BUGGY_APP="${ECR_URI}:${COMMIT_ID}"
+echo "BUGGY_APP=$BUGGY_APP"
+echo "export BUGGY_APP=$BUGGY_APP" >> /tmp/envvars
 
-echo "Environment variable BUGGY_APP set to: $BUGGY_APP"
