@@ -3,21 +3,17 @@ version: 0.2
 env:
   secrets-manager:
     ECR_URI: "Jai-Terraform-Secret:ECR_URI"
-
 phases:
   install:
     commands:
        - Buggy-App/scripts/install.sh
-
   build:
     commands:
-      - source /tmp/envvars
-      - docker build -f Buggy-App/Dockerfile.app -t $BUGGY_APP Buggy-App/
-      
+      # source /tmp/envvars
+      - docker build -f Buggy-App/Dockerfile.app -t $BUGGY_APP Buggy-App/      
   post_build:
     commands:
       - Buggy-App/scripts/post_build.sh
-
 artifacts:
   files:
     - imagedefinitions.json

@@ -17,5 +17,5 @@ echo "Setting commit ID and BUGGY_APP..."
 COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-10)
 export BUGGY_APP="${ECR_URI}:${COMMIT_ID}"
 echo "BUGGY_APP=$BUGGY_APP"
-echo "export BUGGY_APP=$BUGGY_APP" >> /tmp/envvars
+#echo "export BUGGY_APP=$BUGGY_APP" >> /tmp/envvars
 
