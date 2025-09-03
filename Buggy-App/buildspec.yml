@@ -7,13 +7,7 @@ env:
 phases:
   install:
     commands:
-      - echo Installing Terraform...
-      - yum install -y yum-utils
-      - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-      - yum -y install terraform
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $ECR_URI
-      - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-10)
-      - BUGGY_APP="${ECR_URI}:${COMMIT_ID}"
+       - ./scripts/install.sh
 
   build:
     commands:
